@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'com.google.cloud.tools.jib' version '3.3.1'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group 'br.com.rodrigo.kafka'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://packages.confluent.io/maven"
+    }
+}
+
+dependencies {
+    implementation 'org.apache.beam:beam-sdks-java-io-google-cloud-platform:2.47.0'
+    implementation 'org.apache.beam:beam-sdks-java-core:2.47.0'
+    implementation 'org.apache.beam:beam-runners-google-cloud-dataflow-java:2.47.0'
+    implementation 'com.google.cloud:google-cloud-bigquery:2.25.0'
+    implementation 'io.confluent:kafka-schema-registry-client:7.3.2'
+    implementation 'ch.qos.logback:logback-classic:1.4.7'
+}
+
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'br.com.rodrigo.kafka.KafkaToBigQuery'
+    }
+}
